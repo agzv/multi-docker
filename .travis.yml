@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t anvargzv/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true anvargzv/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t anvargzv/multi-client ./client
+  - docker build -t anvargzv/milti-nginx ./nginx
+  - docker build -t anvargzv/multi-server ./server
+  - docker build -t anvargzv/milti-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push anvargzv/multi-client
+  - docker push anvargzv/multi-nginx
+  - docker push anvargzv/multi-server
+  - docker push anvargzv/multi-worker
