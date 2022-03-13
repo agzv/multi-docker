@@ -14,7 +14,7 @@ after_success:
   - docker build -t anvargzv/multi-server ./server
   - docker build -t anvargzv/milti-worker ./worker
   - echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin
-  - docker push anvargzv/multi-client
-  - docker push anvargzv/multi-nginx
-  - docker push anvargzv/multi-server
-  - docker push anvargzv/multi-worker
+  - docker push anvargzv/multi-client:latest
+  - docker push anvargzv/multi-nginx:latest
+  - docker push anvargzv/multi-server:latest
+  - docker push anvargzv/multi-worker:latest
